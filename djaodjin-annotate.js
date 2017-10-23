@@ -65,7 +65,7 @@ MIT License
         classPosition2 = 'btn-block';
       }
       if (self.options.bootstrap) {
-        self.$tool = '<div id="">' +
+        self.$tool = '<div class="annotate-toolbar">' +
           '<button id="undoaction" title="Undo the last annotation"' +
           ' class="btn btn-primary ' + classPosition2 +
           ' annotate-undo">' +
@@ -133,34 +133,15 @@ MIT License
           '</div>';
       }
       self.$tool = $(self.$tool);
-      $('.annotate-container').append(self.$tool);
-      var canvasPosition = self.$el.offset();
-      if (self.options.position === 'top' || self.options.position !==
-        'top' && !self.options.bootstrap) {
-        self.$tool.css({
-          position: 'absolute',
-          top: -35,
-          left: canvasPosition.left
-        });
-      } else if (self.options.position === 'left' && self.options.bootstrap) {
-        self.$tool.css({
-          position: 'absolute',
-          top: canvasPosition.top - 35,
-          left: canvasPosition.left - 20
-        });
-      } else if (self.options.position === 'right' && self.options.bootstrap) {
-        self.$tool.css({
-          position: 'absolute',
-          top: canvasPosition.top - 35,
-          left: canvasPosition.left + self.baseCanvas.width + 20
-        });
-      } else if (self.options.position === 'bottom' && self.options.bootstrap) {
-        self.$tool.css({
-          position: 'absolute',
-          top: canvasPosition.top + self.baseCanvas.height + 35,
-          left: canvasPosition.left
-        });
+
+      if (self.options.toolTarget) {
+        self.options.toolTarget.append(self.$tool);
+      } else {
+        $('.annotate-container').append(self.$tool);
       }
+
+      var canvasPosition = self.$el.offset();
+
       self.$textbox = $('<textarea id=""' +
         ' style="position:absolute;z-index:100000;display:none;top:0;left:0;' +
         'background:transparent;border:1px dotted; line-height:25px;' +
@@ -168,7 +149,9 @@ MIT License
         ';font-family:sans-serif;color:' + self.options.color +
         ';word-wrap: break-word;outline-width: 0;overflow: hidden;' +
         'padding:0px"></textarea>');
-      $('body').append(self.$textbox);
+
+      self.$el.append(self.$textbox);
+
       if (self.options.images) {
         self.initBackgroundImages();
       } else {
