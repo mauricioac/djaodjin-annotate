@@ -1,5 +1,5 @@
 /*
-djaodjin-annotate.js v0.0.4
+djaodjin-annotate.js v0.0.5
 Copyright (c) 2015, Djaodjin Inc.
 MIT License
 */
@@ -69,15 +69,15 @@ MIT License
           '<button id="undoaction" title="Undo the last annotation"' +
           ' class="btn btn-primary ' + classPosition2 +
           ' annotate-undo">' +
-          '<i class="glyphicon glyphicon-arrow-left"></i></button>' +
+          '<i class="fa fa-undo"></i></button>' +
           '<div class="' + classPosition1 + '" data-toggle="buttons">';
         if (self.options.unselectTool) {
           self.$tool += '<label class="btn btn-danger active">' +
             '<input type="radio" name="' + self.toolOptionId +
             '" data-tool="null"' +
             ' data-toggle="tooltip" data-placement="top"' +
-            ' title="No tool selected">' +
-            '<i class="glyphicon glyphicon-ban-circle"></i>' +
+            ' title="Move tool">' +
+            '<i class="fa fa-arrows"></i>' +
             '</label>';
         }
         self.$tool += '<label class="btn btn-primary active">' +
@@ -85,33 +85,33 @@ MIT License
           '" data-tool="rectangle"' +
           ' data-toggle="tooltip" data-placement="top"' +
           ' title="Draw an rectangle">' +
-          '<i class="glyphicon glyphicon-unchecked"></i>' +
+          '<i class="fa fa-square-o"></i>' +
           '</label><label class="btn btn-primary">' +
           '<input type="radio" name="' + self.toolOptionId +
           '" data-tool="circle"' +
           ' data-toggle="tooltip"' +
           'data-placement="top" title="Write some text">' +
-          '<i class="glyphicon glyphicon-copyright-mark"></i>' +
+          '<i class="fa fa-circle-o"></i>' +
           '</label><label class="btn btn-primary">' +
           '<input type="radio" name="' + self.toolOptionId +
           '" data-tool="text"' +
           ' data-toggle="tooltip"' +
           'data-placement="top" title="Write some text">' +
-          '<i class="glyphicon glyphicon-font"></i></label>' +
+          '<i class="fa fa-font"></i></label>' +
           '<label class="btn btn-primary">' +
           '<input type="radio" name="' + self.toolOptionId +
           '" data-tool="arrow"' +
           ' data-toggle="tooltip" data-placement="top" title="Draw an arrow">' +
-          '<i class="glyphicon glyphicon-arrow-up"></i></label>' +
+          '<i class="fa fa-arrow-right"></i></label>' +
           '<label class="btn btn-primary">' +
           '<input type="radio" name="' + self.toolOptionId +
           '" data-tool="pen"' +
           ' data-toggle="tooltip" data-placement="top" title="Pen Tool">' +
-          '<i class="glyphicon glyphicon-pencil"></i></label>' +
+          '<i class="fa fa-pencil"></i></label>' +
           '</div><button type="button" id="redoaction"' +
           ' title="Redo the last undone annotation"' +
           'class="btn btn-primary ' + classPosition2 + ' annotate-redo">' +
-          '<i class="glyphicon glyphicon-arrow-right"></i></button>' +
+          '<i class="fa fa-repeat"></i></button>' +
           '</div>';
       } else {
         self.$tool = '<div id="" style="display:inline-block">' +
@@ -234,13 +234,13 @@ MIT License
     },
     addElements: function(newStoredElements, set, callback)
     {
-      var self = this; 
-      this.storedElement = newStoredElements; 
-      //console.log('DJ: Adding new annotations'); 
+      var self = this;
+      this.storedElement = newStoredElements;
+      //console.log('DJ: Adding new annotations');
       self.clear();
       self.redraw();
-      
-    },    
+
+    },
     pushImage: function(newImage, set, callback) {
       var self = this;
       var id = null;
@@ -717,7 +717,7 @@ MIT License
       var currentcompensationWidthRate = self.compensationWidthRate;
       self.compensationWidthRate = self.selectImageSize.width /
         currentWidth;
-      if (self.compensationWidthRate < 1) {
+      if (self.compensationWidthRate < 1 || isNaN(self.compensationWidthRate)) {
         self.compensationWidthRate = 1;
       }
       self.linewidth = self.options.linewidth * self.compensationWidthRate;
@@ -770,7 +770,7 @@ MIT License
         throw new Error('No annotate initialized for: #' + $(this).attr(
           'id'));
       }
-    
+
     }else if (options === 'fill') {
       if ($annotate) {
         $annotate.addElements(cmdOption, true, callback);
@@ -778,7 +778,7 @@ MIT License
         throw new Error('No annotate initialized for: #' + $(this).attr(
           'id'));
       }
-    
+
     } else if (options === 'export') {
       if ($annotate) {
         $annotate.exportImage(cmdOption, callback);
