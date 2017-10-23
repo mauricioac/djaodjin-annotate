@@ -65,77 +65,125 @@ MIT License
         classPosition2 = 'btn-block';
       }
       if (self.options.bootstrap) {
-        self.$tool = '<div class="annotate-toolbar">' +
-          '<button id="undoaction" title="Undo the last annotation"' +
-          ' class="btn btn-primary ' + classPosition2 +
-          ' annotate-undo">' +
-          '<i class="fa fa-undo"></i></button>' +
-          '<div class="' + classPosition1 + '" data-toggle="buttons">';
-        if (self.options.unselectTool) {
-          self.$tool += '<label class="btn btn-danger active">' +
-            '<input type="radio" name="' + self.toolOptionId +
-            '" data-tool="null"' +
-            ' data-toggle="tooltip" data-placement="top"' +
-            ' title="Move tool">' +
-            '<i class="fa fa-arrows"></i>' +
-            '</label>';
+        self.$tool = '<div class="annotate-toolbar">';
+
+        if (self.options.toolbar.undo_redo) {
+          self.$tool += '<button id="undoaction" title="Undo the last annotation"' +
+                        ' class="btn btn-primary ' + classPosition2 +
+                        ' annotate-undo">' +
+                        '<i class="fa fa-undo"></i></button>';
         }
-        self.$tool += '<label class="btn btn-primary active">' +
-          '<input type="radio" name="' + self.toolOptionId +
-          '" data-tool="rectangle"' +
-          ' data-toggle="tooltip" data-placement="top"' +
-          ' title="Draw an rectangle">' +
-          '<i class="fa fa-square-o"></i>' +
-          '</label><label class="btn btn-primary">' +
-          '<input type="radio" name="' + self.toolOptionId +
-          '" data-tool="circle"' +
-          ' data-toggle="tooltip"' +
-          'data-placement="top" title="Write some text">' +
-          '<i class="fa fa-circle-o"></i>' +
-          '</label><label class="btn btn-primary">' +
-          '<input type="radio" name="' + self.toolOptionId +
-          '" data-tool="text"' +
-          ' data-toggle="tooltip"' +
-          'data-placement="top" title="Write some text">' +
-          '<i class="fa fa-font"></i></label>' +
-          '<label class="btn btn-primary">' +
-          '<input type="radio" name="' + self.toolOptionId +
-          '" data-tool="arrow"' +
-          ' data-toggle="tooltip" data-placement="top" title="Draw an arrow">' +
-          '<i class="fa fa-arrow-right"></i></label>' +
-          '<label class="btn btn-primary">' +
-          '<input type="radio" name="' + self.toolOptionId +
-          '" data-tool="pen"' +
-          ' data-toggle="tooltip" data-placement="top" title="Pen Tool">' +
-          '<i class="fa fa-pencil"></i></label>' +
-          '</div><button type="button" id="redoaction"' +
+
+        self.$tool += '<div class="' + classPosition1 + '" data-toggle="buttons">';
+
+        if (self.options.toolbar.unselect) {
+          self.$tool += '<label class="btn btn-danger active">' +
+                        '<input type="radio" name="' + self.toolOptionId +
+                        '" data-tool="null"' +
+                        ' data-toggle="tooltip" data-placement="top"' +
+                        ' title="Move tool">' +
+                        '<i class="fa fa-arrows"></i>' +
+                        '</label>';
+        }
+
+        if (self.options.toolbar.rectangle) {
+          self.$tool += '<label class="btn btn-primary active">' +
+                        '<input type="radio" name="' + self.toolOptionId +
+                        '" data-tool="rectangle"' +
+                        ' data-toggle="tooltip" data-placement="top"' +
+                        ' title="Draw an rectangle">' +
+                        '<i class="fa fa-square-o"></i>' +
+                        '</label>';
+        }
+
+        if (self.options.toolbar.circle) {
+          self.$tool += '<label class="btn btn-primary">' +
+                        '<input type="radio" name="' + self.toolOptionId +
+                        '" data-tool="circle"' +
+                        ' data-toggle="tooltip"' +
+                        'data-placement="top" title="Write some text">' +
+                        '<i class="fa fa-circle-o"></i>' +
+                        '</label>';
+        }
+
+        if (self.options.toolbar.text) {
+          self.$tool += '<label class="btn btn-primary">' +
+                        '<input type="radio" name="' + self.toolOptionId +
+                        '" data-tool="text"' +
+                        ' data-toggle="tooltip"' +
+                        'data-placement="top" title="Write some text">' +
+                        '<i class="fa fa-font"></i></label>';
+        }
+
+        if (self.options.toolbar.arrow) {
+          self.$tool += '<label class="btn btn-primary">' +
+                        '<input type="radio" name="' + self.toolOptionId +
+                        '" data-tool="arrow"' +
+                        ' data-toggle="tooltip" data-placement="top" title="Draw an arrow">' +
+                        '<i class="fa fa-arrow-right"></i></label>';
+        }
+
+        if (self.options.toolbar.pen) {
+          self.$tool += '<label class="btn btn-primary">' +
+                        '<input type="radio" name="' + self.toolOptionId +
+                        '" data-tool="pen"' +
+                        ' data-toggle="tooltip" data-placement="top" title="Pen Tool">' +
+                        '<i class="fa fa-pencil"></i></label>';
+        }
+
+        self.$tool += "</div>";
+
+        if (self.options.toolbar.undo_redo) {
+          self.$tool += '<button type="button" id="redoaction"' +
           ' title="Redo the last undone annotation"' +
           'class="btn btn-primary ' + classPosition2 + ' annotate-redo">' +
-          '<i class="fa fa-repeat"></i></button>' +
-          '</div>';
+          '<i class="fa fa-repeat"></i></button>';
+        }
+
+        self.$tool += "</div>";
       } else {
-        self.$tool = '<div id="" style="display:inline-block">' +
-          '<button id="undoaction">UNDO</button>';
-        if (self.options.unselectTool) {
+        self.$tool = '<div id="" style="display:inline-block">';
+
+        if (self.options.toolbar.undo_redo) {
+          self.$tool += '<button id="undoaction">UNDO</button>';
+        }
+
+        if (self.options.toolbar.unselect) {
           self.$tool += '<input type="radio" name="' + self.toolOptionId +
             '" data-tool="null">NO TOOL SELECTED';
         }
-        self.$tool += '<input type="radio" name="' + self.toolOptionId +
-          '" data-tool="rectangle" checked>RECTANGLE' +
-          '<input type="radio" name="' + self.toolOptionId +
-          '" data-tool="circle">CIRCLE<input type="radio" name="' +
-          self.toolOptionId + '" data-tool="text"> TEXT' +
-          '<input type="radio" name="' + self.toolOptionId +
-          '" data-tool="arrow">ARROW<input type="radio" name="' +
-          self.toolOptionId + '" data-tool="pen">PEN' +
-          '<button id="redoaction"' +
-          'title="Redo the last undone annotation">REDO</button>' +
-          '</div>';
+
+        if (self.options.toolbar.rectangle) {
+          self.$tool += '<input type="radio" name="' + self.toolOptionId + '" data-tool="rectangle" checked>RECTANGLE';
+        }
+
+        if (self.options.toolbar.circle) {
+          self.$tool += '<input type="radio" name="' + self.toolOptionId + '" data-tool="circle">CIRCLE';
+        }
+
+        if (self.options.toolbar.text) {
+          self.$tool += '<input type="radio" name="' + self.toolOptionId + '" data-tool="text"> TEXT';
+        }
+
+        if (self.options.toolbar.arrow) {
+          self.$tool += '<input type="radio" name="' + self.toolOptionId + '" data-tool="arrow">ARROW';
+        }
+
+        if (self.options.toolbar.rectangle) {
+          self.$tool += '<input type="radio" name="' + self.toolOptionId + '" data-tool="pen">PEN';
+        }
+
+        if (self.options.toolbar.undo_redo) {
+          self.$tool += '<button id="redoaction"' + 'title="Redo the last undone annotation">REDO</button>';
+        }
+
+        self.$tool += '</div>';
       }
+
       self.$tool = $(self.$tool);
 
-      if (self.options.toolTarget) {
-        self.options.toolTarget.append(self.$tool);
+      if (self.options.toolbar.target) {
+        self.options.toolbar.target.append(self.$tool);
       } else {
         $('.annotate-container').append(self.$tool);
       }
@@ -474,7 +522,7 @@ MIT License
       context.font = self.fontsize + ' sans-serif';
       context.textBaseline = 'top';
       context.fillStyle = self.options.color;
-      self.wrapText(context, text, x + 3, y + 4, maxWidth, 25);
+      self.wrapText(context, text, x + 3, y, maxWidth, 25);
     },
     pushText: function() {
       var self = this;
@@ -788,6 +836,16 @@ MIT License
     idAttribute: 'id',
     selectEvent: 'change',
     unselectTool: false,
+    toolbar: {
+      target: null,
+      undo_redo: true,
+      unselect: false,
+      rectangle: true,
+      circle: true,
+      text: true,
+      arrow: true,
+      pen: true
+    },
     onExport: function(image) {
       console.log(image);
     }
