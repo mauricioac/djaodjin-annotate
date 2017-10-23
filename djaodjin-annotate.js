@@ -818,7 +818,7 @@ MIT License
           'id'));
       }
     } else {
-      var opts = $.extend({}, $.fn.annotate.defaults, options);
+      var opts = $.extend(true, {}, $.fn.annotate.defaults, options);
       var annotate = new Annotate($(this), opts);
       $(this).data('annotate', annotate);
     }
