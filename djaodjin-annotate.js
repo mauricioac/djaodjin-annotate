@@ -144,6 +144,7 @@ MIT License
       } else {
         self.$tool = '<div id="" style="display:inline-block">';
 
+        console.log(self.options.toolbar);
         if (self.options.toolbar.undo_redo) {
           self.$tool += '<button id="undoaction">UNDO</button>';
         }
@@ -185,20 +186,25 @@ MIT License
       if (self.options.toolbar.target) {
         self.options.toolbar.target.append(self.$tool);
       } else {
-        $('.annotate-container').append(self.$tool);
+
+        if (self.options.bootstrap) {
+          self.$el.append(self.$tool);
+        } else {
+          self.$tool.insertBefore(self.$el);
+        }
       }
 
       var canvasPosition = self.$el.offset();
 
       self.$textbox = $('<textarea id=""' +
-        ' style="position:absolute;z-index:100000;display:none;top:0;left:0;' +
+        ' style="position:absolute;z-index:99999999999;display:none;top:0;left:0;' +
         'background:transparent;border:1px dotted; line-height:25px;' +
         ';font-size:' + self.fontsize +
         ';font-family:sans-serif;color:' + self.options.color +
         ';word-wrap: break-word;outline-width: 0;overflow: hidden;' +
-        'padding:0px"></textarea>');
+        'padding:0px" class="annotate-textbox"></textarea>');
 
-      self.$el.append(self.$textbox);
+      $("body").append(self.$textbox);
 
       if (self.options.images) {
         self.initBackgroundImages();
@@ -555,6 +561,7 @@ MIT License
       var self = this;
       self.clicked = true;
       var offset = self.$el.offset();
+
       if (self.$textbox.is(':visible')) {
         var text = self.$textbox.val();
         self.$textbox.val('').hide();
@@ -588,8 +595,8 @@ MIT License
       self.fromyText = pageY;
       if (self.options.type === 'text') {
         self.$textbox.css({
-          left: self.fromxText + 2,
-          top: self.fromyText,
+          left: self.fromx,
+          top: self.fromy + 4,
           width: 0,
           height: 0
         }).show();
